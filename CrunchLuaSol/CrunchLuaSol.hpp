@@ -574,7 +574,15 @@ struct checker<stick::Error>
     template <typename Handler>
     static bool check(lua_State * L, int index, Handler && handler, record & tracking)
     {
-        return sol::stack::check<sol::table>(L, lua_absindex(L, index), handler, tracking);
+        int idx = lua_absindex(L, index);
+        tracking.use(1);
+        if (!sol::stack::check<sol::nil_t>(L, idx) && !sol::stack::check<sol::table>(L, idx))
+        {
+            handler(L, idx, type_of(L, idx), type::poly,
+                    "Expected nil or table to convert to Error.");
+            return false;
+        }
+        return true;
     }
 };
 
@@ -584,6 +592,9 @@ struct getter<stick::Error>
     static stick::Error get(lua_State * L, int index, record & tracking)
     {
         int absolute_index = lua_absindex(L, index);
+        if (sol::stack::check<sol::nil_t>(L, absolute_index))
+            return stick::Error();
+
         sol::table tbl(L, index);
         tracking.use(1);
         return stick::Error(tbl.get<stick::Int32>("code"),
