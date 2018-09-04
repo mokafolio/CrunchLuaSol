@@ -537,6 +537,8 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
                           return detail::luaNoiseGenerator().noise(_a, _b, _c, _d);
                       }));
 
+    tbl.set_function("noiseSeed", [](Int32 _val) { detail::luaNoiseGenerator().setSeed(_val); });
+
     tbl.set_function("toRadians", toRadians<Float>);
     tbl.set_function("toDegrees", toDegrees<Float>);
 }
