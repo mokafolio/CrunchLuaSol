@@ -524,6 +524,8 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
             [](Float _num) { return detail::luaRandomNumberGenerator().randomd(_num); },
             [](Float _a, Float _b) { return detail::luaRandomNumberGenerator().randomd(_a, _b); }));
 
+    tbl.set_function("randomSeed", [](Size _val) { detail::luaRandomNumberGenerator().setSeed(_val); } );
+
     tbl.set_function(
         "noise",
         sol::overload([](Float _a) { return detail::luaNoiseGenerator().noise(_a); },
