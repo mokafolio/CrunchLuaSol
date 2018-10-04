@@ -92,9 +92,15 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
     }
 
     tbl.new_usertype<Vec2>(
-        "Vec2", sol::call_constructor,
-        sol::constructors<Vec2(), Vec2(Float, Float), Vec2(Float), Vec2(const Vec2 &)>(), "x",
-        &Vec2::x, "y", &Vec2::y, sol::meta_function::equal_to, &Vec2::operator==,
+        "Vec2",
+        sol::call_constructor,
+        sol::constructors<Vec2(), Vec2(Float, Float), Vec2(Float), Vec2(const Vec2 &)>(),
+        "x",
+        &Vec2::x,
+        "y",
+        &Vec2::y,
+        sol::meta_function::equal_to,
+        &Vec2::operator==,
         sol::meta_function::addition,
         sol::overload(((Vec2(Vec2::*)(const Vec2 &) const) & Vec2::operator+),
                       ((Vec2(Vec2::*)(Float) const) & Vec2::operator+)),
@@ -109,10 +115,18 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
                       ((Vec2(Vec2::*)(Float) const) & Vec2::operator/)));
 
     tbl.new_usertype<Vec3>(
-        "Vec3", sol::call_constructor,
+        "Vec3",
+        sol::call_constructor,
         sol::constructors<Vec3(), Vec3(Float, Float, Float), Vec3(Float), Vec3(const Vec3 &)>(),
-        "x", &Vec3::x, "y", &Vec3::y, "z", &Vec3::z, sol::meta_function::equal_to,
-        &Vec3::operator==, sol::meta_function::addition,
+        "x",
+        &Vec3::x,
+        "y",
+        &Vec3::y,
+        "z",
+        &Vec3::z,
+        sol::meta_function::equal_to,
+        &Vec3::operator==,
+        sol::meta_function::addition,
         sol::overload(((Vec3(Vec3::*)(const Vec3 &) const) & Vec3::operator+),
                       ((Vec3(Vec3::*)(Float) const) & Vec3::operator+)),
         sol::meta_function::subtraction,
@@ -125,11 +139,22 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
         sol::overload(((Vec3(Vec3::*)(const Vec3 &) const) & Vec3::operator/),
                       ((Vec3(Vec3::*)(Float) const) & Vec3::operator/)));
 
-    tbl.new_usertype<Vec4>("Vec4", sol::call_constructor,
-                           sol::constructors<Vec4(), Vec4(Float, Float, Float, Float), Vec4(Float),
+    tbl.new_usertype<Vec4>("Vec4",
+                           sol::call_constructor,
+                           sol::constructors<Vec4(),
+                                             Vec4(Float, Float, Float, Float),
+                                             Vec4(Float),
                                              Vec4(const Vec4 &)>(),
-                           "x", &Vec4::x, "y", &Vec4::y, "z", &Vec4::z, "w", &Vec4::z,
-                           sol::meta_function::equal_to, &Vec4::operator==,
+                           "x",
+                           &Vec4::x,
+                           "y",
+                           &Vec4::y,
+                           "z",
+                           &Vec4::z,
+                           "w",
+                           &Vec4::z,
+                           sol::meta_function::equal_to,
+                           &Vec4::operator==,
                            sol::meta_function::addition,
                            sol::overload(((Vec4(Vec4::*)(const Vec4 &) const) & Vec4::operator+),
                                          ((Vec4(Vec4::*)(Float) const) & Vec4::operator+)),
@@ -181,13 +206,15 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
 
     tbl.set_function("cross2", (Float(*)(const Vec2 &, const Vec2 &))crunch::cross);
     tbl.set_function("cross3", (Vec3(*)(const Vec3 &, const Vec3 &))crunch::cross);
-    tbl.set_function("cross", sol::overload((Float(*)(const Vec2 &, const Vec2 &))crunch::cross,
-                                            (Vec3(*)(const Vec3 &, const Vec3 &))crunch::cross));
+    tbl.set_function("cross",
+                     sol::overload((Float(*)(const Vec2 &, const Vec2 &))crunch::cross,
+                                   (Vec3(*)(const Vec3 &, const Vec3 &))crunch::cross));
 
     tbl.set_function("normalize2", (Vec2(*)(const Vec2 &))crunch::normalize);
     tbl.set_function("normalize3", (Vec3(*)(const Vec3 &))crunch::normalize);
-    tbl.set_function("normalize", sol::overload((Vec2(*)(const Vec2 &))crunch::normalize,
-                                                (Vec3(*)(const Vec3 &))crunch::normalize));
+    tbl.set_function("normalize",
+                     sol::overload((Vec2(*)(const Vec2 &))crunch::normalize,
+                                   (Vec3(*)(const Vec3 &))crunch::normalize));
 
     tbl.set_function("rotate2", ((Vec2(*)(const Vec2 &, Float))crunch::rotate));
     tbl.set_function("rotateAround2", ((Vec2(*)(const Vec2 &, const Vec2 &, Float))crunch::rotate));
@@ -197,13 +224,15 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
 
     tbl.set_function("dot2", (Float(*)(const Vec2 &, const Vec2 &))crunch::dot);
     tbl.set_function("dot3", (Float(*)(const Vec3 &, const Vec3 &))crunch::dot);
-    tbl.set_function("dot", sol::overload((Float(*)(const Vec2 &, const Vec2 &))crunch::dot,
-                                          (Float(*)(const Vec3 &, const Vec3 &))crunch::dot));
+    tbl.set_function("dot",
+                     sol::overload((Float(*)(const Vec2 &, const Vec2 &))crunch::dot,
+                                   (Float(*)(const Vec3 &, const Vec3 &))crunch::dot));
 
     tbl.set_function("length2", (Float(*)(const Vec2 &))crunch::length);
     tbl.set_function("length3", (Float(*)(const Vec3 &))crunch::length);
-    tbl.set_function("length", sol::overload((Float(*)(const Vec2 &))crunch::length,
-                                             (Float(*)(const Vec3 &))crunch::length));
+    tbl.set_function("length",
+                     sol::overload((Float(*)(const Vec2 &))crunch::length,
+                                   (Float(*)(const Vec3 &))crunch::length));
 
     tbl.set_function("distance2", (Float(*)(const Vec2 &, const Vec2 &))crunch::distance);
     tbl.set_function("distance3", (Float(*)(const Vec3 &, const Vec3 &))crunch::distance);
@@ -362,39 +391,53 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
     tbl.set_function("transpose2", (Mat2(*)(const Mat2 &))crunch::transpose);
     tbl.set_function("transpose3", (Mat3(*)(const Mat3 &))crunch::transpose);
     tbl.set_function("transpose4", (Mat4(*)(const Mat4 &))crunch::transpose);
-    tbl.set_function("transpose", sol::overload((Mat2(*)(const Mat2 &))crunch::transpose,
-                                                (Mat3(*)(const Mat3 &))crunch::transpose,
-                                                (Mat4(*)(const Mat4 &))crunch::transpose));
+    tbl.set_function("transpose",
+                     sol::overload((Mat2(*)(const Mat2 &))crunch::transpose,
+                                   (Mat3(*)(const Mat3 &))crunch::transpose,
+                                   (Mat4(*)(const Mat4 &))crunch::transpose));
 
     tbl.set_function("determinant2", (Float(*)(const Mat2 &))crunch::determinant);
     tbl.set_function("determinant3", (Float(*)(const Mat3 &))crunch::determinant);
     tbl.set_function("determinant4", (Float(*)(const Mat4 &))crunch::determinant);
-    tbl.set_function("determinant", sol::overload((Float(*)(const Mat2 &))crunch::determinant,
-                                                  (Float(*)(const Mat3 &))crunch::determinant,
-                                                  (Float(*)(const Mat4 &))crunch::determinant));
+    tbl.set_function("determinant",
+                     sol::overload((Float(*)(const Mat2 &))crunch::determinant,
+                                   (Float(*)(const Mat3 &))crunch::determinant,
+                                   (Float(*)(const Mat4 &))crunch::determinant));
 
     tbl.set_function("adjoint2", (Mat2(*)(const Mat2 &))crunch::adjoint);
     tbl.set_function("adjoint3", (Mat3(*)(const Mat3 &))crunch::adjoint);
     tbl.set_function("adjoint4", (Mat4(*)(const Mat4 &))crunch::adjoint);
-    tbl.set_function("adjoint", sol::overload((Mat2(*)(const Mat2 &))crunch::adjoint,
-                                              (Mat3f(*)(const Mat3 &))crunch::adjoint,
-                                              (Mat4(*)(const Mat4 &))crunch::adjoint));
+    tbl.set_function("adjoint",
+                     sol::overload((Mat2(*)(const Mat2 &))crunch::adjoint,
+                                   (Mat3f(*)(const Mat3 &))crunch::adjoint,
+                                   (Mat4(*)(const Mat4 &))crunch::adjoint));
 
     tbl.set_function("inverse2", (Mat2(*)(const Mat2 &))crunch::inverse);
     tbl.set_function("inverse3", (Mat3(*)(const Mat3 &))crunch::inverse);
     tbl.set_function("inverse32", (Mat32(*)(const Mat32 &))crunch::inverse);
     tbl.set_function("inverse4", (Mat4(*)(const Mat4 &))crunch::inverse);
-    tbl.set_function("inverse", sol::overload((Mat2(*)(const Mat2 &))crunch::inverse,
-                                              (Mat3(*)(const Mat3 &))crunch::inverse,
-                                              (Mat32(*)(const Mat32 &))crunch::inverse,
-                                              (Mat4(*)(const Mat4 &))crunch::inverse));
+    tbl.set_function("inverse",
+                     sol::overload((Mat2(*)(const Mat2 &))crunch::inverse,
+                                   (Mat3(*)(const Mat3 &))crunch::inverse,
+                                   (Mat32(*)(const Mat32 &))crunch::inverse,
+                                   (Mat4(*)(const Mat4 &))crunch::inverse));
 
     tbl.new_usertype<ColorRGB>(
-        "ColorRGB", sol::call_constructor,
-        sol::constructors<ColorRGB(), ColorRGB(Float, Float, Float), ColorRGB(Float),
+        "ColorRGB",
+        sol::call_constructor,
+        sol::constructors<ColorRGB(),
+                          ColorRGB(Float, Float, Float),
+                          ColorRGB(Float),
                           ColorRGB(const ColorRGB &)>(),
-        "r", &ColorRGB::r, "g", &ColorRGB::g, "b", &ColorRGB::b, sol::meta_function::equal_to,
-        &ColorRGB::operator==, sol::meta_function::addition,
+        "r",
+        &ColorRGB::r,
+        "g",
+        &ColorRGB::g,
+        "b",
+        &ColorRGB::b,
+        sol::meta_function::equal_to,
+        &ColorRGB::operator==,
+        sol::meta_function::addition,
         sol::overload(((ColorRGB(ColorRGB::*)(const ColorRGB &) const) & ColorRGB::operator+),
                       ((ColorRGB(ColorRGB::*)(Float) const) & ColorRGB::operator+)),
         sol::meta_function::subtraction,
@@ -408,11 +451,22 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
                       ((ColorRGB(ColorRGB::*)(Float) const) & ColorRGB::operator/)));
 
     tbl.new_usertype<ColorRGBA>(
-        "ColorRGBA", sol::call_constructor,
-        sol::constructors<ColorRGBA(), ColorRGBA(Float, Float, Float, Float),
+        "ColorRGBA",
+        sol::call_constructor,
+        sol::constructors<ColorRGBA(),
+                          ColorRGBA(Float, Float, Float, Float),
                           ColorRGBA(const ColorRGBA &)>(),
-        "r", &ColorRGBA::r, "g", &ColorRGBA::g, "b", &ColorRGBA::b, "a", &ColorRGBA::a,
-        sol::meta_function::equal_to, &ColorRGBA::operator==, sol::meta_function::addition,
+        "r",
+        &ColorRGBA::r,
+        "g",
+        &ColorRGBA::g,
+        "b",
+        &ColorRGBA::b,
+        "a",
+        &ColorRGBA::a,
+        sol::meta_function::equal_to,
+        &ColorRGBA::operator==,
+        sol::meta_function::addition,
         sol::overload(((ColorRGBA(ColorRGBA::*)(const ColorRGBA &) const) & ColorRGBA::operator+),
                       ((ColorRGBA(ColorRGBA::*)(Float) const) & ColorRGBA::operator+)),
         sol::meta_function::subtraction,
@@ -426,11 +480,21 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
                       ((ColorRGBA(ColorRGBA::*)(Float) const) & ColorRGBA::operator/)));
 
     tbl.new_usertype<ColorHSB>(
-        "ColorHSB", sol::call_constructor,
-        sol::constructors<ColorHSB(), ColorHSB(Float, Float, Float), ColorHSB(Float),
+        "ColorHSB",
+        sol::call_constructor,
+        sol::constructors<ColorHSB(),
+                          ColorHSB(Float, Float, Float),
+                          ColorHSB(Float),
                           ColorHSB(const ColorHSB &)>(),
-        "h", &ColorHSB::h, "s", &ColorHSB::s, "b", &ColorHSB::b, sol::meta_function::equal_to,
-        &ColorHSB::operator==, sol::meta_function::addition,
+        "h",
+        &ColorHSB::h,
+        "s",
+        &ColorHSB::s,
+        "b",
+        &ColorHSB::b,
+        sol::meta_function::equal_to,
+        &ColorHSB::operator==,
+        sol::meta_function::addition,
         sol::overload(((ColorHSB(ColorHSB::*)(const ColorHSB &) const) & ColorHSB::operator+),
                       ((ColorHSB(ColorHSB::*)(Float) const) & ColorHSB::operator+)),
         sol::meta_function::subtraction,
@@ -444,11 +508,22 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
                       ((ColorHSB(ColorHSB::*)(Float) const) & ColorHSB::operator/)));
 
     tbl.new_usertype<ColorHSBA>(
-        "ColorHSBA", sol::call_constructor,
-        sol::constructors<ColorHSBA(), ColorHSBA(Float, Float, Float, Float),
+        "ColorHSBA",
+        sol::call_constructor,
+        sol::constructors<ColorHSBA(),
+                          ColorHSBA(Float, Float, Float, Float),
                           ColorHSBA(const ColorHSBA &)>(),
-        "h", &ColorHSBA::h, "s", &ColorHSBA::s, "b", &ColorHSBA::b, "a", &ColorHSBA::a,
-        sol::meta_function::equal_to, &ColorHSBA::operator==, sol::meta_function::addition,
+        "h",
+        &ColorHSBA::h,
+        "s",
+        &ColorHSBA::s,
+        "b",
+        &ColorHSBA::b,
+        "a",
+        &ColorHSBA::a,
+        sol::meta_function::equal_to,
+        &ColorHSBA::operator==,
+        sol::meta_function::addition,
         sol::overload(((ColorHSBA(ColorHSBA::*)(const ColorHSBA &) const) & ColorHSBA::operator+),
                       ((ColorHSBA(ColorHSBA::*)(Float) const) & ColorHSBA::operator+)),
         sol::meta_function::subtraction,
@@ -461,60 +536,90 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
         sol::overload(((ColorHSBA(ColorHSBA::*)(const ColorHSBA &) const) & ColorHSBA::operator/),
                       ((ColorHSBA(ColorHSBA::*)(Float) const) & ColorHSBA::operator/)));
 
-    tbl.set_function("toRGB", sol::overload((ColorRGB(*)(const ColorRGBA &)) & toRGB,
-                                            (ColorRGB(*)(const ColorHSBA &)) & toRGB,
-                                            (ColorRGB(*)(const ColorHSB &)) & toRGB));
+    tbl.set_function("toRGB",
+                     sol::overload((ColorRGB(*)(const ColorRGBA &)) & toRGB,
+                                   (ColorRGB(*)(const ColorHSBA &)) & toRGB,
+                                   (ColorRGB(*)(const ColorHSB &)) & toRGB));
 
-    tbl.set_function("toRGBA", sol::overload((ColorRGBA(*)(const ColorRGB &)) & toRGBA,
-                                             (ColorRGBA(*)(const ColorHSBA &)) & toRGBA,
-                                             (ColorRGBA(*)(const ColorHSB &)) & toRGBA));
+    tbl.set_function("toRGBA",
+                     sol::overload((ColorRGBA(*)(const ColorRGB &)) & toRGBA,
+                                   (ColorRGBA(*)(const ColorHSBA &)) & toRGBA,
+                                   (ColorRGBA(*)(const ColorHSB &)) & toRGBA));
 
-    tbl.set_function("toHSB", sol::overload((ColorHSB(*)(const ColorRGBA &)) & toHSB,
-                                            (ColorHSB(*)(const ColorHSBA &)) & toHSB,
-                                            (ColorHSB(*)(const ColorRGB &)) & toHSB));
+    tbl.set_function("toHSB",
+                     sol::overload((ColorHSB(*)(const ColorRGBA &)) & toHSB,
+                                   (ColorHSB(*)(const ColorHSBA &)) & toHSB,
+                                   (ColorHSB(*)(const ColorRGB &)) & toHSB));
 
-    tbl.set_function("toHSBA", sol::overload((ColorHSBA(*)(const ColorRGBA &)) & toHSBA,
-                                             (ColorHSBA(*)(const ColorHSB &)) & toHSBA,
-                                             (ColorHSBA(*)(const ColorRGB &)) & toHSBA));
+    tbl.set_function("toHSBA",
+                     sol::overload((ColorHSBA(*)(const ColorRGBA &)) & toHSBA,
+                                   (ColorHSBA(*)(const ColorHSB &)) & toHSBA,
+                                   (ColorHSBA(*)(const ColorRGB &)) & toHSBA));
 
-    tbl.new_usertype<Rect>(
-        "Rect", sol::call_constructor,
-        sol::constructors<Rect(), Rect(Float, Float, Float, Float), Rect(const Rect &),
-                          Rect(const Vec2 &, const Vec2 &), Rect(const Vec2 &, Float, Float)>(),
-        sol::meta_function::equal_to, &Rect::operator==, "contains",
-        sol::overload((bool (Rect::*)(const Rect &) const) & Rect::contains,
-                      (bool (Rect::*)(const Vec2 &) const) & Rect::contains),
-        "setSize",
-        sol::overload((void (Rect::*)(Float, Float)) & Rect::setSize,
-                      (void (Rect::*)(const Vec2 &)) & Rect::setSize),
-        "setPosition",
-        sol::overload((void (Rect::*)(Float, Float)) & Rect::setPosition,
-                      (void (Rect::*)(const Vec2 &)) & Rect::setPosition),
-        "moveBy",
-        sol::overload((void (Rect::*)(Float, Float)) & Rect::moveBy,
-                      (void (Rect::*)(const Vec2 &)) & Rect::moveBy),
-        "setMin",
-        sol::overload((void (Rect::*)(Float, Float)) & Rect::setMin,
-                      (void (Rect::*)(const Vec2 &)) & Rect::setMin),
-        "setMax",
-        sol::overload((void (Rect::*)(Float, Float)) & Rect::setMax,
-                      (void (Rect::*)(const Vec2 &)) & Rect::setMax),
-        "area", &Rect::area, "min", (const Vec2 & (Rect::*)(void)const) & Rect::min, "max",
-        (const Vec2 & (Rect::*)(void)const) & Rect::max, "center", &Rect::center, "width",
-        &Rect::width, "height", &Rect::height, "size", &Rect::size);
+    tbl.new_usertype<Rect>("Rect",
+                           sol::call_constructor,
+                           sol::constructors<Rect(),
+                                             Rect(Float, Float, Float, Float),
+                                             Rect(const Rect &),
+                                             Rect(const Vec2 &, const Vec2 &),
+                                             Rect(const Vec2 &, Float, Float)>(),
+                           sol::meta_function::equal_to,
+                           &Rect::operator==,
+                           "contains",
+                           sol::overload((bool (Rect::*)(const Rect &) const) & Rect::contains,
+                                         (bool (Rect::*)(const Vec2 &) const) & Rect::contains),
+                           "setSize",
+                           sol::overload((void (Rect::*)(Float, Float)) & Rect::setSize,
+                                         (void (Rect::*)(const Vec2 &)) & Rect::setSize),
+                           "setPosition",
+                           sol::overload((void (Rect::*)(Float, Float)) & Rect::setPosition,
+                                         (void (Rect::*)(const Vec2 &)) & Rect::setPosition),
+                           "moveBy",
+                           sol::overload((void (Rect::*)(Float, Float)) & Rect::moveBy,
+                                         (void (Rect::*)(const Vec2 &)) & Rect::moveBy),
+                           "setMin",
+                           sol::overload((void (Rect::*)(Float, Float)) & Rect::setMin,
+                                         (void (Rect::*)(const Vec2 &)) & Rect::setMin),
+                           "setMax",
+                           sol::overload((void (Rect::*)(Float, Float)) & Rect::setMax,
+                                         (void (Rect::*)(const Vec2 &)) & Rect::setMax),
+                           "area",
+                           &Rect::area,
+                           "min",
+                           (const Vec2 & (Rect::*)(void)const) & Rect::min,
+                           "max",
+                           (const Vec2 & (Rect::*)(void)const) & Rect::max,
+                           "center",
+                           &Rect::center,
+                           "width",
+                           &Rect::width,
+                           "height",
+                           &Rect::height,
+                           "size",
+                           &Rect::size);
 
     tbl.new_usertype<Line2>(
-        "Line2", sol::call_constructor,
+        "Line2",
+        sol::call_constructor,
         sol::constructors<Line2(), Line2(const Line2 &), Line2(const Vec2 &, const Vec2 &)>(),
-        "fromPoints", &Line2::fromPoints, "position", &Line2::position, "direction",
+        "fromPoints",
+        &Line2::fromPoints,
+        "position",
+        &Line2::position,
+        "direction",
         &Line2::direction);
 
-    tbl.new_usertype<LineSegment2>(
-        "LineSegment2", sol::call_constructor,
-        sol::constructors<LineSegment2(), LineSegment2(const LineSegment2 &),
-                          LineSegment2(const Vec2 &, const Vec2 &)>(),
-        "positionOne", &LineSegment2::positionOne, "positionTwo", &LineSegment2::positionTwo,
-        "direction", &LineSegment2::direction);
+    tbl.new_usertype<LineSegment2>("LineSegment2",
+                                   sol::call_constructor,
+                                   sol::constructors<LineSegment2(),
+                                                     LineSegment2(const LineSegment2 &),
+                                                     LineSegment2(const Vec2 &, const Vec2 &)>(),
+                                   "positionOne",
+                                   &LineSegment2::positionOne,
+                                   "positionTwo",
+                                   &LineSegment2::positionTwo,
+                                   "direction",
+                                   &LineSegment2::direction);
 
     tbl.set_function(
         "intersect",
@@ -524,98 +629,203 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
 
     // Register Tweens
     tbl.new_usertype<TweenLinearEaseOutf>(
-        "TweenLinearEaseOut", sol::call_constructor,
+        "TweenLinearEaseOut",
+        sol::call_constructor,
         sol::constructors<TweenLinearEaseOutf(),
                           TweenLinearEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update", &TweenLinearEaseOutf::update, "origin", &TweenLinearEaseOutf::origin,
-        "destination", &TweenLinearEaseOutf::destination, "current", &TweenLinearEaseOutf::current,
-        "timeElapsed", &TweenLinearEaseOutf::timeElapsed, "duration",
-        &TweenLinearEaseOutf::duration, "isFinished", &TweenLinearEaseOutf::isFinished);
+        "update",
+        &TweenLinearEaseOutf::update,
+        "origin",
+        &TweenLinearEaseOutf::origin,
+        "destination",
+        &TweenLinearEaseOutf::destination,
+        "current",
+        &TweenLinearEaseOutf::current,
+        "timeElapsed",
+        &TweenLinearEaseOutf::timeElapsed,
+        "duration",
+        &TweenLinearEaseOutf::duration,
+        "isFinished",
+        &TweenLinearEaseOutf::isFinished);
 
     tbl.new_usertype<TweenLinearEaseOut2f>(
-        "TweenLinearEaseOut2", sol::call_constructor,
+        "TweenLinearEaseOut2",
+        sol::call_constructor,
         sol::constructors<TweenLinearEaseOut2f(),
                           TweenLinearEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update", &TweenLinearEaseOut2f::update, "origin", &TweenLinearEaseOut2f::origin,
-        "destination", &TweenLinearEaseOut2f::destination, "current",
-        &TweenLinearEaseOut2f::current, "timeElapsed", &TweenLinearEaseOut2f::timeElapsed,
-        "duration", &TweenLinearEaseOut2f::duration, "isFinished",
+        "update",
+        &TweenLinearEaseOut2f::update,
+        "origin",
+        &TweenLinearEaseOut2f::origin,
+        "destination",
+        &TweenLinearEaseOut2f::destination,
+        "current",
+        &TweenLinearEaseOut2f::current,
+        "timeElapsed",
+        &TweenLinearEaseOut2f::timeElapsed,
+        "duration",
+        &TweenLinearEaseOut2f::duration,
+        "isFinished",
         &TweenLinearEaseOut2f::isFinished);
 
     tbl.new_usertype<TweenCubicEaseOutf>(
-        "TweenCubicEaseOut", sol::call_constructor,
+        "TweenCubicEaseOut",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseOutf(),
                           TweenCubicEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update", &TweenCubicEaseOutf::update, "origin", &TweenCubicEaseOutf::origin, "destination",
-        &TweenCubicEaseOutf::destination, "current", &TweenCubicEaseOutf::current, "timeElapsed",
-        &TweenCubicEaseOutf::timeElapsed, "duration", &TweenCubicEaseOutf::duration, "isFinished",
+        "update",
+        &TweenCubicEaseOutf::update,
+        "origin",
+        &TweenCubicEaseOutf::origin,
+        "destination",
+        &TweenCubicEaseOutf::destination,
+        "current",
+        &TweenCubicEaseOutf::current,
+        "timeElapsed",
+        &TweenCubicEaseOutf::timeElapsed,
+        "duration",
+        &TweenCubicEaseOutf::duration,
+        "isFinished",
         &TweenCubicEaseOutf::isFinished);
 
     tbl.new_usertype<TweenCubicEaseOut2f>(
-        "TweenCubicEaseOut2", sol::call_constructor,
+        "TweenCubicEaseOut2",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseOut2f(),
                           TweenCubicEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update", &TweenCubicEaseOut2f::update, "origin", &TweenCubicEaseOut2f::origin,
-        "destination", &TweenCubicEaseOut2f::destination, "current", &TweenCubicEaseOut2f::current,
-        "timeElapsed", &TweenCubicEaseOut2f::timeElapsed, "duration",
-        &TweenCubicEaseOut2f::duration, "isFinished", &TweenCubicEaseOut2f::isFinished);
+        "update",
+        &TweenCubicEaseOut2f::update,
+        "origin",
+        &TweenCubicEaseOut2f::origin,
+        "destination",
+        &TweenCubicEaseOut2f::destination,
+        "current",
+        &TweenCubicEaseOut2f::current,
+        "timeElapsed",
+        &TweenCubicEaseOut2f::timeElapsed,
+        "duration",
+        &TweenCubicEaseOut2f::duration,
+        "isFinished",
+        &TweenCubicEaseOut2f::isFinished);
 
     tbl.new_usertype<TweenCubicEaseInf>(
-        "TweenCubicEaseIn", sol::call_constructor,
+        "TweenCubicEaseIn",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseInf(),
                           TweenCubicEaseInf(const Float32 &, const Float32 &, Float64)>(),
-        "update", &TweenCubicEaseInf::update, "origin", &TweenCubicEaseInf::origin, "destination",
-        &TweenCubicEaseInf::destination, "current", &TweenCubicEaseInf::current, "timeElapsed",
-        &TweenCubicEaseInf::timeElapsed, "duration", &TweenCubicEaseInf::duration, "isFinished",
+        "update",
+        &TweenCubicEaseInf::update,
+        "origin",
+        &TweenCubicEaseInf::origin,
+        "destination",
+        &TweenCubicEaseInf::destination,
+        "current",
+        &TweenCubicEaseInf::current,
+        "timeElapsed",
+        &TweenCubicEaseInf::timeElapsed,
+        "duration",
+        &TweenCubicEaseInf::duration,
+        "isFinished",
         &TweenCubicEaseInf::isFinished);
 
     tbl.new_usertype<TweenCubicEaseIn2f>(
-        "TweenCubicEaseIn2", sol::call_constructor,
+        "TweenCubicEaseIn2",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseIn2f(),
                           TweenCubicEaseIn2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update", &TweenCubicEaseIn2f::update, "origin", &TweenCubicEaseIn2f::origin, "destination",
-        &TweenCubicEaseIn2f::destination, "current", &TweenCubicEaseIn2f::current, "timeElapsed",
-        &TweenCubicEaseIn2f::timeElapsed, "duration", &TweenCubicEaseIn2f::duration, "isFinished",
+        "update",
+        &TweenCubicEaseIn2f::update,
+        "origin",
+        &TweenCubicEaseIn2f::origin,
+        "destination",
+        &TweenCubicEaseIn2f::destination,
+        "current",
+        &TweenCubicEaseIn2f::current,
+        "timeElapsed",
+        &TweenCubicEaseIn2f::timeElapsed,
+        "duration",
+        &TweenCubicEaseIn2f::duration,
+        "isFinished",
         &TweenCubicEaseIn2f::isFinished);
 
     tbl.new_usertype<TweenCubicEaseInOutf>(
-        "TweenCubicEaseInOut", sol::call_constructor,
+        "TweenCubicEaseInOut",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseInOutf(),
                           TweenCubicEaseInOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update", &TweenCubicEaseInOutf::update, "origin", &TweenCubicEaseInOutf::origin,
-        "destination", &TweenCubicEaseInOutf::destination, "current",
-        &TweenCubicEaseInOutf::current, "timeElapsed", &TweenCubicEaseInOutf::timeElapsed,
-        "duration", &TweenCubicEaseInOutf::duration, "isFinished",
+        "update",
+        &TweenCubicEaseInOutf::update,
+        "origin",
+        &TweenCubicEaseInOutf::origin,
+        "destination",
+        &TweenCubicEaseInOutf::destination,
+        "current",
+        &TweenCubicEaseInOutf::current,
+        "timeElapsed",
+        &TweenCubicEaseInOutf::timeElapsed,
+        "duration",
+        &TweenCubicEaseInOutf::duration,
+        "isFinished",
         &TweenCubicEaseInOutf::isFinished);
 
     tbl.new_usertype<TweenCubicEaseInOut2f>(
-        "TweenCubicEaseInOut2", sol::call_constructor,
+        "TweenCubicEaseInOut2",
+        sol::call_constructor,
         sol::constructors<TweenCubicEaseInOut2f(),
                           TweenCubicEaseInOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update", &TweenCubicEaseInOut2f::update, "origin", &TweenCubicEaseInOut2f::origin,
-        "destination", &TweenCubicEaseInOut2f::destination, "current",
-        &TweenCubicEaseInOut2f::current, "timeElapsed", &TweenCubicEaseInOut2f::timeElapsed,
-        "duration", &TweenCubicEaseInOut2f::duration, "isFinished",
+        "update",
+        &TweenCubicEaseInOut2f::update,
+        "origin",
+        &TweenCubicEaseInOut2f::origin,
+        "destination",
+        &TweenCubicEaseInOut2f::destination,
+        "current",
+        &TweenCubicEaseInOut2f::current,
+        "timeElapsed",
+        &TweenCubicEaseInOut2f::timeElapsed,
+        "duration",
+        &TweenCubicEaseInOut2f::duration,
+        "isFinished",
         &TweenCubicEaseInOut2f::isFinished);
 
     tbl.new_usertype<TweenElasticEaseOutf>(
-        "TweenElasticEaseOut", sol::call_constructor,
+        "TweenElasticEaseOut",
+        sol::call_constructor,
         sol::constructors<TweenElasticEaseOutf(),
                           TweenElasticEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update", &TweenElasticEaseOutf::update, "origin", &TweenElasticEaseOutf::origin,
-        "destination", &TweenElasticEaseOutf::destination, "current",
-        &TweenElasticEaseOutf::current, "timeElapsed", &TweenElasticEaseOutf::timeElapsed,
-        "duration", &TweenElasticEaseOutf::duration, "isFinished",
+        "update",
+        &TweenElasticEaseOutf::update,
+        "origin",
+        &TweenElasticEaseOutf::origin,
+        "destination",
+        &TweenElasticEaseOutf::destination,
+        "current",
+        &TweenElasticEaseOutf::current,
+        "timeElapsed",
+        &TweenElasticEaseOutf::timeElapsed,
+        "duration",
+        &TweenElasticEaseOutf::duration,
+        "isFinished",
         &TweenElasticEaseOutf::isFinished);
 
     tbl.new_usertype<TweenElasticEaseOut2f>(
-        "TweenElasticEaseOut2", sol::call_constructor,
+        "TweenElasticEaseOut2",
+        sol::call_constructor,
         sol::constructors<TweenElasticEaseOut2f(),
                           TweenElasticEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update", &TweenElasticEaseOut2f::update, "origin", &TweenElasticEaseOut2f::origin,
-        "destination", &TweenElasticEaseOut2f::destination, "current",
-        &TweenElasticEaseOut2f::current, "timeElapsed", &TweenElasticEaseOut2f::timeElapsed,
-        "duration", &TweenElasticEaseOut2f::duration, "isFinished",
+        "update",
+        &TweenElasticEaseOut2f::update,
+        "origin",
+        &TweenElasticEaseOut2f::origin,
+        "destination",
+        &TweenElasticEaseOut2f::destination,
+        "current",
+        &TweenElasticEaseOut2f::current,
+        "timeElapsed",
+        &TweenElasticEaseOut2f::timeElapsed,
+        "duration",
+        &TweenElasticEaseOut2f::duration,
+        "isFinished",
         &TweenElasticEaseOut2f::isFinished);
 
     tbl.set_function(
@@ -643,6 +853,7 @@ STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String
 
     tbl.set_function("toRadians", toRadians<Float>);
     tbl.set_function("toDegrees", toDegrees<Float>);
+    tbl.set_function("directedAngle", directedAngle<Float>);
 }
 } // namespace crunchLuaSol
 
@@ -657,9 +868,15 @@ struct unique_usertype_traits<stick::SharedPtr<T>>
     typedef stick::SharedPtr<T> actual_type;
     static const bool value = true;
 
-    static bool is_null(const actual_type & value) { return (bool)!value; }
+    static bool is_null(const actual_type & value)
+    {
+        return (bool)!value;
+    }
 
-    static type * get(const actual_type & p) { return p.get(); }
+    static type * get(const actual_type & p)
+    {
+        return p.get();
+    }
 };
 
 template <>
@@ -684,8 +901,8 @@ struct checker<stick::Error>
         tracking.use(1);
         if (!sol::stack::check<sol::nil_t>(L, idx) && !sol::stack::check<sol::table>(L, idx))
         {
-            handler(L, idx, type_of(L, idx), type::poly,
-                    "Expected nil or table to convert to Error.");
+            handler(
+                L, idx, type_of(L, idx), type::poly, "Expected nil or table to convert to Error.");
             return false;
         }
         return true;
@@ -705,7 +922,8 @@ struct getter<stick::Error>
         tracking.use(1);
         return stick::Error(tbl.get<stick::Int32>("code"),
                             *tbl.get<stick::ErrorCategory *>("category"),
-                            tbl.get<const char *>("message"), tbl.get<const char *>("file"),
+                            tbl.get<const char *>("message"),
+                            tbl.get<const char *>("file"),
                             tbl.get<stick::Size>("line"));
     }
 };
@@ -802,8 +1020,8 @@ struct checker<stick::Maybe<T>, sol::type::poly>
         tracking.use(1);
         if (!sol::stack::check<sol::nil_t>(L, idx) && !sol::stack::check<T>(L, idx))
         {
-            handler(L, idx, type_of(L, idx), type::poly,
-                    "Expected nil or T to convert to Maybe<T>.");
+            handler(
+                L, idx, type_of(L, idx), type::poly, "Expected nil or T to convert to Maybe<T>.");
             return false;
         }
 
@@ -858,24 +1076,36 @@ struct checker<stick::Variant<Args...>, sol::type::poly>
     using TL = typename stick::MakeTypeList<Args...>::List;
 
     template <typename Handler>
-    static bool is_one(std::integral_constant<std::size_t, 0>, lua_State * L, int index,
-                       Handler && handler, record & tracking)
+    static bool is_one(std::integral_constant<std::size_t, 0>,
+                       lua_State * L,
+                       int index,
+                       Handler && handler,
+                       record & tracking)
     {
         tracking.use(1);
-        handler(L, index, type::poly, type_of(L, index),
+        handler(L,
+                index,
+                type::poly,
+                type_of(L, index),
                 "value does not fit any type present in the stick::Variant");
         return false;
     }
 
     template <std::size_t I, typename Handler>
-    static bool is_one(std::integral_constant<std::size_t, I>, lua_State * L, int index,
-                       Handler && handler, record & tracking)
+    static bool is_one(std::integral_constant<std::size_t, I>,
+                       lua_State * L,
+                       int index,
+                       Handler && handler,
+                       record & tracking)
     {
         using Type = typename stick::TypeAt<TL, I - 1>::Type;
         if (stack::check<Type>(L, index, no_panic, tracking))
             return true;
-        return is_one(std::integral_constant<std::size_t, I - 1>(), L, index,
-                      std::forward<Handler>(handler), tracking);
+        return is_one(std::integral_constant<std::size_t, I - 1>(),
+                      L,
+                      index,
+                      std::forward<Handler>(handler),
+                      tracking);
     }
 
     template <typename Handler>
@@ -887,8 +1117,11 @@ struct checker<stick::Variant<Args...>, sol::type::poly>
             tracking.use(1);
             return true;
         }
-        return is_one(std::integral_constant<std::size_t, TL::count>(), L, index,
-                      std::forward<Handler>(handler), tracking);
+        return is_one(std::integral_constant<std::size_t, TL::count>(),
+                      L,
+                      index,
+                      std::forward<Handler>(handler),
+                      tracking);
     }
 };
 
@@ -898,14 +1131,18 @@ struct getter<stick::Variant<Args...>>
     using VariantType = stick::Variant<Args...>;
     using TL = typename stick::MakeTypeList<Args...>::List;
 
-    static VariantType get_one(std::integral_constant<std::size_t, 0>, lua_State * L, int index,
+    static VariantType get_one(std::integral_constant<std::size_t, 0>,
+                               lua_State * L,
+                               int index,
                                record & tracking)
     {
         return VariantType();
     }
 
     template <std::size_t I>
-    static VariantType get_one(std::integral_constant<std::size_t, I>, lua_State * L, int index,
+    static VariantType get_one(std::integral_constant<std::size_t, I>,
+                               lua_State * L,
+                               int index,
                                record & tracking)
     {
         using Type = typename stick::TypeAt<TL, I - 1>::Type;
@@ -941,8 +1178,8 @@ struct pusher<stick::Variant<Args...>>
         if (_variant.template is<Type>())
             return sol::stack::push(L, _variant.template get<Type>());
         else
-            return push_one(std::integral_constant<std::size_t, I - 1>(), L,
-                            std::forward<VT>(_variant));
+            return push_one(
+                std::integral_constant<std::size_t, I - 1>(), L, std::forward<VT>(_variant));
     }
 
     static int push(lua_State * L, const VariantType & _variant)
