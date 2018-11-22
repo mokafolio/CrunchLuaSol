@@ -3,7 +3,7 @@ luaDep = dependency('lua', version: '>=5.3')
 stickDep = cc.find_library('Stick')
 
 exe = executable('CrunchLuaSolTests', 'CrunchLuaSolTests.cpp', 
-    dependencies: [stickDep, luaDep], 
+    dependencies: [stickDep, luaDep, dependency('threads')], 
     include_directories: incDirs,
     cpp_args: '-fsanitize=address',
     link_args: '-fsanitize=address')
