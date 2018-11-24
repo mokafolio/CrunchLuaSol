@@ -33,7 +33,7 @@ namespace crunchLuaSol
 {
 
 STICK_API inline void registerCrunch(sol::state_view _lua, const stick::String & _namespace = "");
-STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl, const stick::String & _namespace);
+STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl);
 
 using Float = stick::Float32;
 using Circle = crunch::Circle<Float>;
@@ -81,23 +81,31 @@ static crunch::Randomizer & luaRandomNumberGenerator()
 // }
 } // namespace detail
 
-STICK_API inline void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
+STICK_API inline sol::table ensureNamespaceTable(sol::state_view _lua, sol::table _startTbl, const stick::String & _namespace)
 {
-    registerCrunch(_lua, _lua.globals(), _namespace);
-}
-
-STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl, const stick::String & _namespace)
-{
-    using namespace crunch;
     using namespace stick;
 
-    sol::table tbl = _tbl;
+    sol::table tbl = _startTbl;
     if (!_namespace.isEmpty())
     {
         auto tokens = path::segments(_namespace, '.');
         for (const String & token : tokens)
             tbl = tbl[token.cString()] = tbl.get_or(token.cString(), _lua.create_table());
     }
+    return tbl;
+}
+
+STICK_API inline void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
+{   
+    registerCrunch(_lua, ensureNamespaceTable(_lua, _lua.globals(), _namespace));
+}
+
+STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl)
+{
+    using namespace crunch;
+    using namespace stick;
+
+    sol::table tbl = _tbl;
 
     tbl.new_usertype<Vec2>(
         "Vec2",
