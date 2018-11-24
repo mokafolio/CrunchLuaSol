@@ -21,16 +21,19 @@
 #include <Crunch/Vector2.hpp>
 #include <Crunch/Vector3.hpp>
 #include <Crunch/Vector4.hpp>
-#include <sol/sol.hpp>
 
 #include <Stick/Path.hpp>
 #include <Stick/SharedPtr.hpp>
 #include <Stick/TypeList.hpp>
 #include <Stick/Variant.hpp>
 
+#include <sol/sol.hpp>
+
 namespace crunchLuaSol
 {
-STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String & _namespace = "");
+
+STICK_API inline void registerCrunch(sol::state_view _lua, const stick::String & _namespace = "");
+STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl, const stick::String & _namespace);
 
 using Float = stick::Float32;
 using Circle = crunch::Circle<Float>;
@@ -78,12 +81,17 @@ static crunch::Randomizer & luaRandomNumberGenerator()
 // }
 } // namespace detail
 
-STICK_API inline void registerCrunch(sol::state_view & _lua, const stick::String & _namespace)
+STICK_API inline void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
+{
+    registerCrunch(_lua, _lua.globals(), _namespace);
+}
+
+STICK_API inline void registerCrunch(sol::state_view _lua, sol::table _tbl, const stick::String & _namespace)
 {
     using namespace crunch;
     using namespace stick;
 
-    sol::table tbl = _lua.globals();
+    sol::table tbl = _tbl;
     if (!_namespace.isEmpty())
     {
         auto tokens = path::segments(_namespace, '.');
