@@ -63,12 +63,12 @@ static inline crunch::Randomizer & luaRandomNumberGenerator()
 }
 } // namespace detail
 
-void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
+STICK_API void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
 {
-    registerCrunch(_lua, ensureNamespaceTable(_lua, _lua.globals(), _namespace));
+    registerCrunch(_lua, stickLuaSol::ensureNamespaceTable(_lua, _lua.globals(), _namespace));
 }
 
-void registerCrunch(sol::state_view _lua, sol::table _tbl)
+STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
 {
     using namespace crunch;
     using namespace stick;
