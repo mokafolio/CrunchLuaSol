@@ -38,15 +38,15 @@ endif
 
 crunchLuaDeps += luaDep
 
-# crunchLuaDep = declare_dependency(
-#     include_directories: incDirs
-# )
-
-crunchLuaDep = library('CrunchLuaSol', 
+crunchLua = library('CrunchLuaSol', 
         'CrunchLuaSol/CrunchLuaSol.cpp',
         dependencies: crunchLuaDeps, 
         include_directories : incDirs,
         install: true)
+
+crunchLuaDep = declare_dependency(link_with : crunchLua, 
+    dependencies: crunchLuaDeps, 
+    include_directories: incDirs)
 
 # if meson.is_subproject() == false
 #     subdir('Tests')
