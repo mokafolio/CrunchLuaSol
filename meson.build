@@ -28,8 +28,10 @@ if get_option('buildSubmodules') == false
     crunchLuaDeps = [stickDep, dependency('threads')]
 else
     stickProj = subproject('Stick')
+    stickLuaProj = subproject('StickLuaSol')
     crunchProj = subproject('Crunch')
-    crunchLuaDeps = [stickProj.get_variable('stickDep'), crunchProj.get_variable('crunchDep')]
+    crunchLuaDeps = [stickProj.get_variable('stickDep'), 
+    crunchProj.get_variable('crunchDep'), stickLuaProj.get_variable('stickLuaDep')]
 endif
 
 if host_machine.system() == 'linux'

@@ -1,4 +1,6 @@
 #include <CrunchLuaSol/CrunchLuaSol.hpp>
+#include <StickLuaSol/StickLuaSol.hpp>
+#include <Stick/Path.hpp>
 
 #include <Crunch/Circle.hpp>
 #include <Crunch/Colors.hpp>
