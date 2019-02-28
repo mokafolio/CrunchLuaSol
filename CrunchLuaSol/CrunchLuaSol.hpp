@@ -221,17 +221,17 @@ struct pusher<stick::Result<T>>
     static int push(lua_State * L, const stick::Result<T> & _result)
     {
         sol::table tbl(L, sol::new_table(0, 1));
-        tbl["ensure"] = [L, _result](sol::table & _self)
+        tbl.set_function("ensure", [L, _result](sol::table & _self)
         {
             return _result.ensure();
-        };
-        tbl["get"] = [L, _result](sol::table & _self)
+        });
+        tbl.set_function("get", [L, _result](sol::table & _self)
         {
             if(_result)
                 return sol::make_object(L, _result.get());
             else
                 return sol::make_object(L, _result.error());
-        };
+        });
         sol::stack::push(L, tbl);
         return 1;
     }
