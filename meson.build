@@ -5,6 +5,8 @@ add_project_arguments('-Wno-missing-braces', language: 'cpp')
 
 incDirs = include_directories('.')
 
+if meson.is_subproject() == false
 install_headers('CrunchLuaSol/CrunchLuaSol.hpp', subdir: 'CrunchLuaSol')
+endif
 
 crunchLuaDep = declare_dependency(include_directories: incDirs)
