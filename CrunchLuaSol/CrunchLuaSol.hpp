@@ -651,8 +651,9 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
     detail::registerTweenClass<TweenElasticEaseIn2f>(tbl, "TweenElasticEaseIn2");
     detail::registerTweenClass<TweenElasticEaseOutf>(tbl, "TweenElasticEaseOut");
     detail::registerTweenClass<TweenElasticEaseOut2f>(tbl, "TweenElasticEaseOut2");
-    detail::registerTweenClass<TweenElasticEaseInOutf>(tbl, "TweenElasticEaseInOut");
-    detail::registerTweenClass<TweenElasticEaseInOut2f>(tbl, "TweenElasticEaseInOut2");
+    //@TODO: thse are missing in crunch, too
+    // detail::registerTweenClass<TweenElasticEaseInOutf>(tbl, "TweenElasticEaseInOut");
+    // detail::registerTweenClass<TweenElasticEaseInOut2f>(tbl, "TweenElasticEaseInOut2");
     
     detail::registerTweenClass<TweenBackEaseInf>(tbl, "TweenBackEaseIn");
     detail::registerTweenClass<TweenBackEaseIn2f>(tbl, "TweenBackEaseIn2");
