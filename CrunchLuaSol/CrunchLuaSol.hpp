@@ -69,7 +69,7 @@ void registerTweenClass(sol::table _tbl, const char * _name)
 
     _tbl.new_usertype<Tween>(_name,
                              sol::call_constructor,
-                             sol::constructors<Tween(), Tween(const VT &, const VT &, Float64)>(),
+                             sol::constructors<Tween(), Tween(const VT &, const VT &, stick::Float64)>(),
                              "update",
                              &Tween::update,
                              "origin",
@@ -639,7 +639,7 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
     // Register Tweens
     detail::registerTweenClass<TweenLinearEaseOutf>(tbl, "TweenLinearEaseOut");
     detail::registerTweenClass<TweenLinearEaseOut2f>(tbl, "TweenLinearEaseOut2");
-    
+
     detail::registerTweenClass<TweenCubicEaseInf>(tbl, "TweenCubicEaseIn");
     detail::registerTweenClass<TweenCubicEaseIn2f>(tbl, "TweenCubicEaseIn2");
     detail::registerTweenClass<TweenCubicEaseOutf>(tbl, "TweenCubicEaseOut");
