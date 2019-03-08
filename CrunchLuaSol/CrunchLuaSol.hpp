@@ -61,6 +61,31 @@ static inline crunch::Randomizer & luaRandomNumberGenerator()
     static crunch::Randomizer s_luaRandomNumbers;
     return s_luaRandomNumbers;
 }
+
+template <class Tween>
+void registerTweenClass(sol::table _tbl, const char * _name)
+{
+    using VT = typename Tween::ValueType;
+
+    _tbl.new_usertype<Tween>(_name,
+                             sol::call_constructor,
+                             sol::constructors<Tween(), Tween(const VT &, const VT &, Float64)>(),
+                             "update",
+                             &Tween::update,
+                             "origin",
+                             &Tween::origin,
+                             "destination",
+                             &Tween::destination,
+                             "current",
+                             &Tween::current,
+                             "timeElapsed",
+                             &Tween::timeElapsed,
+                             "duration",
+                             &Tween::duration,
+                             "isFinished",
+                             &Tween::isFinished);
+}
+
 } // namespace detail
 
 STICK_API void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
@@ -612,205 +637,230 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
                           intersect));
 
     // Register Tweens
-    tbl.new_usertype<TweenLinearEaseOutf>(
-        "TweenLinearEaseOut",
-        sol::call_constructor,
-        sol::constructors<TweenLinearEaseOutf(),
-                          TweenLinearEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update",
-        &TweenLinearEaseOutf::update,
-        "origin",
-        &TweenLinearEaseOutf::origin,
-        "destination",
-        &TweenLinearEaseOutf::destination,
-        "current",
-        &TweenLinearEaseOutf::current,
-        "timeElapsed",
-        &TweenLinearEaseOutf::timeElapsed,
-        "duration",
-        &TweenLinearEaseOutf::duration,
-        "isFinished",
-        &TweenLinearEaseOutf::isFinished);
+    detail::registerTweenClass<TweenLinearEaseOutf>(tbl, "TweenLinearEaseOut");
+    detail::registerTweenClass<TweenLinearEaseOut2f>(tbl, "TweenLinearEaseOut2");
+    
+    detail::registerTweenClass<TweenCubicEaseInf>(tbl, "TweenCubicEaseIn");
+    detail::registerTweenClass<TweenCubicEaseIn2f>(tbl, "TweenCubicEaseIn2");
+    detail::registerTweenClass<TweenCubicEaseOutf>(tbl, "TweenCubicEaseOut");
+    detail::registerTweenClass<TweenCubicEaseOut2f>(tbl, "TweenCubicEaseOut2");
+    detail::registerTweenClass<TweenCubicEaseInOutf>(tbl, "TweenCubicEaseInOut");
+    detail::registerTweenClass<TweenCubicEaseInOut2f>(tbl, "TweenCubicEaseInOut2");
 
-    tbl.new_usertype<TweenLinearEaseOut2f>(
-        "TweenLinearEaseOut2",
-        sol::call_constructor,
-        sol::constructors<TweenLinearEaseOut2f(),
-                          TweenLinearEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update",
-        &TweenLinearEaseOut2f::update,
-        "origin",
-        &TweenLinearEaseOut2f::origin,
-        "destination",
-        &TweenLinearEaseOut2f::destination,
-        "current",
-        &TweenLinearEaseOut2f::current,
-        "timeElapsed",
-        &TweenLinearEaseOut2f::timeElapsed,
-        "duration",
-        &TweenLinearEaseOut2f::duration,
-        "isFinished",
-        &TweenLinearEaseOut2f::isFinished);
+    detail::registerTweenClass<TweenElasticEaseInf>(tbl, "TweenElasticEaseIn");
+    detail::registerTweenClass<TweenElasticEaseIn2f>(tbl, "TweenElasticEaseIn2");
+    detail::registerTweenClass<TweenElasticEaseOutf>(tbl, "TweenElasticEaseOut");
+    detail::registerTweenClass<TweenElasticEaseOut2f>(tbl, "TweenElasticEaseOut2");
+    detail::registerTweenClass<TweenElasticEaseInOutf>(tbl, "TweenElasticEaseInOut");
+    detail::registerTweenClass<TweenElasticEaseInOut2f>(tbl, "TweenElasticEaseInOut2");
+    
+    detail::registerTweenClass<TweenBackEaseInf>(tbl, "TweenBackEaseIn");
+    detail::registerTweenClass<TweenBackEaseIn2f>(tbl, "TweenBackEaseIn2");
+    detail::registerTweenClass<TweenBackEaseOutf>(tbl, "TweenBackEaseOut");
+    detail::registerTweenClass<TweenBackEaseOut2f>(tbl, "TweenBackEaseOut2");
+    detail::registerTweenClass<TweenBackEaseInOutf>(tbl, "TweenBackEaseInOut");
+    detail::registerTweenClass<TweenBackEaseInOut2f>(tbl, "TweenBackEaseInOut2");
 
-    tbl.new_usertype<TweenCubicEaseOutf>(
-        "TweenCubicEaseOut",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseOutf(),
-                          TweenCubicEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update",
-        &TweenCubicEaseOutf::update,
-        "origin",
-        &TweenCubicEaseOutf::origin,
-        "destination",
-        &TweenCubicEaseOutf::destination,
-        "current",
-        &TweenCubicEaseOutf::current,
-        "timeElapsed",
-        &TweenCubicEaseOutf::timeElapsed,
-        "duration",
-        &TweenCubicEaseOutf::duration,
-        "isFinished",
-        &TweenCubicEaseOutf::isFinished);
 
-    tbl.new_usertype<TweenCubicEaseOut2f>(
-        "TweenCubicEaseOut2",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseOut2f(),
-                          TweenCubicEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update",
-        &TweenCubicEaseOut2f::update,
-        "origin",
-        &TweenCubicEaseOut2f::origin,
-        "destination",
-        &TweenCubicEaseOut2f::destination,
-        "current",
-        &TweenCubicEaseOut2f::current,
-        "timeElapsed",
-        &TweenCubicEaseOut2f::timeElapsed,
-        "duration",
-        &TweenCubicEaseOut2f::duration,
-        "isFinished",
-        &TweenCubicEaseOut2f::isFinished);
+    // tbl.new_usertype<TweenLinearEaseOutf>(
+    //     "TweenLinearEaseOut",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenLinearEaseOutf(),
+    //                       TweenLinearEaseOutf(const Float32 &, const Float32 &, Float64)>(),
+    //     "update",
+    //     &TweenLinearEaseOutf::update,
+    //     "origin",
+    //     &TweenLinearEaseOutf::origin,
+    //     "destination",
+    //     &TweenLinearEaseOutf::destination,
+    //     "current",
+    //     &TweenLinearEaseOutf::current,
+    //     "timeElapsed",
+    //     &TweenLinearEaseOutf::timeElapsed,
+    //     "duration",
+    //     &TweenLinearEaseOutf::duration,
+    //     "isFinished",
+    //     &TweenLinearEaseOutf::isFinished);
 
-    tbl.new_usertype<TweenCubicEaseInf>(
-        "TweenCubicEaseIn",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseInf(),
-                          TweenCubicEaseInf(const Float32 &, const Float32 &, Float64)>(),
-        "update",
-        &TweenCubicEaseInf::update,
-        "origin",
-        &TweenCubicEaseInf::origin,
-        "destination",
-        &TweenCubicEaseInf::destination,
-        "current",
-        &TweenCubicEaseInf::current,
-        "timeElapsed",
-        &TweenCubicEaseInf::timeElapsed,
-        "duration",
-        &TweenCubicEaseInf::duration,
-        "isFinished",
-        &TweenCubicEaseInf::isFinished);
+    // tbl.new_usertype<TweenLinearEaseOut2f>(
+    //     "TweenLinearEaseOut2",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenLinearEaseOut2f(),
+    //                       TweenLinearEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
+    //     "update",
+    //     &TweenLinearEaseOut2f::update,
+    //     "origin",
+    //     &TweenLinearEaseOut2f::origin,
+    //     "destination",
+    //     &TweenLinearEaseOut2f::destination,
+    //     "current",
+    //     &TweenLinearEaseOut2f::current,
+    //     "timeElapsed",
+    //     &TweenLinearEaseOut2f::timeElapsed,
+    //     "duration",
+    //     &TweenLinearEaseOut2f::duration,
+    //     "isFinished",
+    //     &TweenLinearEaseOut2f::isFinished);
 
-    tbl.new_usertype<TweenCubicEaseIn2f>(
-        "TweenCubicEaseIn2",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseIn2f(),
-                          TweenCubicEaseIn2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update",
-        &TweenCubicEaseIn2f::update,
-        "origin",
-        &TweenCubicEaseIn2f::origin,
-        "destination",
-        &TweenCubicEaseIn2f::destination,
-        "current",
-        &TweenCubicEaseIn2f::current,
-        "timeElapsed",
-        &TweenCubicEaseIn2f::timeElapsed,
-        "duration",
-        &TweenCubicEaseIn2f::duration,
-        "isFinished",
-        &TweenCubicEaseIn2f::isFinished);
+    // tbl.new_usertype<TweenCubicEaseOutf>(
+    //     "TweenCubicEaseOut",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseOutf(),
+    //                       TweenCubicEaseOutf(const Float32 &, const Float32 &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseOutf::update,
+    //     "origin",
+    //     &TweenCubicEaseOutf::origin,
+    //     "destination",
+    //     &TweenCubicEaseOutf::destination,
+    //     "current",
+    //     &TweenCubicEaseOutf::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseOutf::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseOutf::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseOutf::isFinished);
 
-    tbl.new_usertype<TweenCubicEaseInOutf>(
-        "TweenCubicEaseInOut",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseInOutf(),
-                          TweenCubicEaseInOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update",
-        &TweenCubicEaseInOutf::update,
-        "origin",
-        &TweenCubicEaseInOutf::origin,
-        "destination",
-        &TweenCubicEaseInOutf::destination,
-        "current",
-        &TweenCubicEaseInOutf::current,
-        "timeElapsed",
-        &TweenCubicEaseInOutf::timeElapsed,
-        "duration",
-        &TweenCubicEaseInOutf::duration,
-        "isFinished",
-        &TweenCubicEaseInOutf::isFinished);
+    // tbl.new_usertype<TweenCubicEaseOut2f>(
+    //     "TweenCubicEaseOut2",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseOut2f(),
+    //                       TweenCubicEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseOut2f::update,
+    //     "origin",
+    //     &TweenCubicEaseOut2f::origin,
+    //     "destination",
+    //     &TweenCubicEaseOut2f::destination,
+    //     "current",
+    //     &TweenCubicEaseOut2f::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseOut2f::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseOut2f::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseOut2f::isFinished);
 
-    tbl.new_usertype<TweenCubicEaseInOut2f>(
-        "TweenCubicEaseInOut2",
-        sol::call_constructor,
-        sol::constructors<TweenCubicEaseInOut2f(),
-                          TweenCubicEaseInOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update",
-        &TweenCubicEaseInOut2f::update,
-        "origin",
-        &TweenCubicEaseInOut2f::origin,
-        "destination",
-        &TweenCubicEaseInOut2f::destination,
-        "current",
-        &TweenCubicEaseInOut2f::current,
-        "timeElapsed",
-        &TweenCubicEaseInOut2f::timeElapsed,
-        "duration",
-        &TweenCubicEaseInOut2f::duration,
-        "isFinished",
-        &TweenCubicEaseInOut2f::isFinished);
+    // tbl.new_usertype<TweenCubicEaseInf>(
+    //     "TweenCubicEaseIn",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseInf(),
+    //                       TweenCubicEaseInf(const Float32 &, const Float32 &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseInf::update,
+    //     "origin",
+    //     &TweenCubicEaseInf::origin,
+    //     "destination",
+    //     &TweenCubicEaseInf::destination,
+    //     "current",
+    //     &TweenCubicEaseInf::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseInf::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseInf::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseInf::isFinished);
 
-    tbl.new_usertype<TweenElasticEaseOutf>(
-        "TweenElasticEaseOut",
-        sol::call_constructor,
-        sol::constructors<TweenElasticEaseOutf(),
-                          TweenElasticEaseOutf(const Float32 &, const Float32 &, Float64)>(),
-        "update",
-        &TweenElasticEaseOutf::update,
-        "origin",
-        &TweenElasticEaseOutf::origin,
-        "destination",
-        &TweenElasticEaseOutf::destination,
-        "current",
-        &TweenElasticEaseOutf::current,
-        "timeElapsed",
-        &TweenElasticEaseOutf::timeElapsed,
-        "duration",
-        &TweenElasticEaseOutf::duration,
-        "isFinished",
-        &TweenElasticEaseOutf::isFinished);
+    // tbl.new_usertype<TweenCubicEaseIn2f>(
+    //     "TweenCubicEaseIn2",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseIn2f(),
+    //                       TweenCubicEaseIn2f(const Vec2f &, const Vec2f &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseIn2f::update,
+    //     "origin",
+    //     &TweenCubicEaseIn2f::origin,
+    //     "destination",
+    //     &TweenCubicEaseIn2f::destination,
+    //     "current",
+    //     &TweenCubicEaseIn2f::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseIn2f::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseIn2f::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseIn2f::isFinished);
 
-    tbl.new_usertype<TweenElasticEaseOut2f>(
-        "TweenElasticEaseOut2",
-        sol::call_constructor,
-        sol::constructors<TweenElasticEaseOut2f(),
-                          TweenElasticEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
-        "update",
-        &TweenElasticEaseOut2f::update,
-        "origin",
-        &TweenElasticEaseOut2f::origin,
-        "destination",
-        &TweenElasticEaseOut2f::destination,
-        "current",
-        &TweenElasticEaseOut2f::current,
-        "timeElapsed",
-        &TweenElasticEaseOut2f::timeElapsed,
-        "duration",
-        &TweenElasticEaseOut2f::duration,
-        "isFinished",
-        &TweenElasticEaseOut2f::isFinished);
+    // tbl.new_usertype<TweenCubicEaseInOutf>(
+    //     "TweenCubicEaseInOut",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseInOutf(),
+    //                       TweenCubicEaseInOutf(const Float32 &, const Float32 &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseInOutf::update,
+    //     "origin",
+    //     &TweenCubicEaseInOutf::origin,
+    //     "destination",
+    //     &TweenCubicEaseInOutf::destination,
+    //     "current",
+    //     &TweenCubicEaseInOutf::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseInOutf::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseInOutf::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseInOutf::isFinished);
+
+    // tbl.new_usertype<TweenCubicEaseInOut2f>(
+    //     "TweenCubicEaseInOut2",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenCubicEaseInOut2f(),
+    //                       TweenCubicEaseInOut2f(const Vec2f &, const Vec2f &, Float64)>(),
+    //     "update",
+    //     &TweenCubicEaseInOut2f::update,
+    //     "origin",
+    //     &TweenCubicEaseInOut2f::origin,
+    //     "destination",
+    //     &TweenCubicEaseInOut2f::destination,
+    //     "current",
+    //     &TweenCubicEaseInOut2f::current,
+    //     "timeElapsed",
+    //     &TweenCubicEaseInOut2f::timeElapsed,
+    //     "duration",
+    //     &TweenCubicEaseInOut2f::duration,
+    //     "isFinished",
+    //     &TweenCubicEaseInOut2f::isFinished);
+
+    // tbl.new_usertype<TweenElasticEaseOutf>(
+    //     "TweenElasticEaseOut",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenElasticEaseOutf(),
+    //                       TweenElasticEaseOutf(const Float32 &, const Float32 &, Float64)>(),
+    //     "update",
+    //     &TweenElasticEaseOutf::update,
+    //     "origin",
+    //     &TweenElasticEaseOutf::origin,
+    //     "destination",
+    //     &TweenElasticEaseOutf::destination,
+    //     "current",
+    //     &TweenElasticEaseOutf::current,
+    //     "timeElapsed",
+    //     &TweenElasticEaseOutf::timeElapsed,
+    //     "duration",
+    //     &TweenElasticEaseOutf::duration,
+    //     "isFinished",
+    //     &TweenElasticEaseOutf::isFinished);
+
+    // tbl.new_usertype<TweenElasticEaseOut2f>(
+    //     "TweenElasticEaseOut2",
+    //     sol::call_constructor,
+    //     sol::constructors<TweenElasticEaseOut2f(),
+    //                       TweenElasticEaseOut2f(const Vec2f &, const Vec2f &, Float64)>(),
+    //     "update",
+    //     &TweenElasticEaseOut2f::update,
+    //     "origin",
+    //     &TweenElasticEaseOut2f::origin,
+    //     "destination",
+    //     &TweenElasticEaseOut2f::destination,
+    //     "current",
+    //     &TweenElasticEaseOut2f::current,
+    //     "timeElapsed",
+    //     &TweenElasticEaseOut2f::timeElapsed,
+    //     "duration",
+    //     &TweenElasticEaseOut2f::duration,
+    //     "isFinished",
+    //     &TweenElasticEaseOut2f::isFinished);
 
     tbl.set_function(
         "random",
