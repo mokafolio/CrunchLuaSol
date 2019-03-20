@@ -431,6 +431,14 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
                                    (Mat32(*)(const Mat32 &))crunch::inverse,
                                    (Mat4(*)(const Mat4 &))crunch::inverse));
 
+    tbl.set_function("decompose32", [](const Mat32 & _mat)
+    {
+        Vec2 oTrans, oSkew, oScale;
+        Float oRot;
+        decompose(_mat, oTrans, oRot, oSkew, oScale);
+        return std::make_tuple(oTrans, oRot, oSkew, oScale);
+    });
+
     tbl.new_usertype<ColorRGB>(
         "ColorRGB",
         sol::call_constructor,
