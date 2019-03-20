@@ -67,23 +67,24 @@ void registerTweenClass(sol::table _tbl, const char * _name)
 {
     using VT = typename Tween::ValueType;
 
-    _tbl.new_usertype<Tween>(_name,
-                             sol::call_constructor,
-                             sol::constructors<Tween(), Tween(const VT &, const VT &, stick::Float64)>(),
-                             "update",
-                             &Tween::update,
-                             "origin",
-                             &Tween::origin,
-                             "destination",
-                             &Tween::destination,
-                             "current",
-                             &Tween::current,
-                             "timeElapsed",
-                             &Tween::timeElapsed,
-                             "duration",
-                             &Tween::duration,
-                             "isFinished",
-                             &Tween::isFinished);
+    _tbl.new_usertype<Tween>(
+        _name,
+        sol::call_constructor,
+        sol::constructors<Tween(), Tween(const VT &, const VT &, stick::Float64)>(),
+        "update",
+        &Tween::update,
+        "origin",
+        &Tween::origin,
+        "destination",
+        &Tween::destination,
+        "current",
+        &Tween::current,
+        "timeElapsed",
+        &Tween::timeElapsed,
+        "duration",
+        &Tween::duration,
+        "isFinished",
+        &Tween::isFinished);
 }
 
 } // namespace detail
@@ -292,6 +293,8 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
         "skewMatrix",
         sol::overload((Mat32(*)(Float, Float)) & Mat32::skewMatrix,
                       (Mat32(*)(const Vec2 &)) & Mat32::skewMatrix),
+        "ortho",
+        &Mat32::ortho,
         sol::meta_function::equal_to, &Mat32::operator==,
         sol::meta_function::addition, & Mat32::operator+,
         sol::meta_function::subtraction,(Mat32 (Mat32::*)(const Mat32 &) const) & Mat32::operator-,
@@ -431,8 +434,7 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
                                    (Mat32(*)(const Mat32 &))crunch::inverse,
                                    (Mat4(*)(const Mat4 &))crunch::inverse));
 
-    tbl.set_function("decompose32", [](const Mat32 & _mat)
-    {
+    tbl.set_function("decompose32", [](const Mat32 & _mat) {
         Vec2 oTrans, oSkew, oScale;
         Float oRot;
         decompose(_mat, oTrans, oRot, oSkew, oScale);
@@ -661,14 +663,13 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
     detail::registerTweenClass<TweenElasticEaseOut2f>(tbl, "TweenElasticEaseOut2");
     detail::registerTweenClass<TweenElasticEaseInOutf>(tbl, "TweenElasticEaseInOut");
     detail::registerTweenClass<TweenElasticEaseInOut2f>(tbl, "TweenElasticEaseInOut2");
-    
+
     detail::registerTweenClass<TweenBackEaseInf>(tbl, "TweenBackEaseIn");
     detail::registerTweenClass<TweenBackEaseIn2f>(tbl, "TweenBackEaseIn2");
     detail::registerTweenClass<TweenBackEaseOutf>(tbl, "TweenBackEaseOut");
     detail::registerTweenClass<TweenBackEaseOut2f>(tbl, "TweenBackEaseOut2");
     detail::registerTweenClass<TweenBackEaseInOutf>(tbl, "TweenBackEaseInOut");
     detail::registerTweenClass<TweenBackEaseInOut2f>(tbl, "TweenBackEaseInOut2");
-
 
     // tbl.new_usertype<TweenLinearEaseOutf>(
     //     "TweenLinearEaseOut",
