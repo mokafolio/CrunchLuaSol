@@ -903,6 +903,9 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
 
     tbl.set_function("toRadians", toRadians<Float>);
     tbl.set_function("toDegrees", toDegrees<Float>);
+    tbl.set_function("to3DTransform",
+                     sol::overload((Mat4(*)(const Mat32 &))to3DTransform,
+                                   (Mat4(*)(const Mat3 &))to3DTransform));
     tbl.set_function("directedAngle", directedAngle<Float>);
 }
 } // namespace crunchLuaSol
