@@ -587,6 +587,8 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
                            "contains",
                            sol::overload((bool (Rect::*)(const Rect &) const) & Rect::contains,
                                          (bool (Rect::*)(const Vec2 &) const) & Rect::contains),
+                           "overlaps",
+                           &Rect::overlaps,
                            "setSize",
                            sol::overload((void (Rect::*)(Float, Float)) & Rect::setSize,
                                          (void (Rect::*)(const Vec2 &)) & Rect::setSize),
