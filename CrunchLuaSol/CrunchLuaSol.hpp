@@ -617,7 +617,15 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
                            "height",
                            &Rect::height,
                            "size",
-                           &Rect::size);
+                           &Rect::size,
+                           "topLeft",
+                           &Rect::topLeft,
+                           "topRight",
+                           &Rect::topRight,
+                           "bottomLeft",
+                           &Rect::bottomLeft,
+                           "bottomRight",
+                           &Rect::bottomRight);
 
     tbl.new_usertype<Line2>(
         "Line2",
