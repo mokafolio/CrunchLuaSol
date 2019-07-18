@@ -89,6 +89,7 @@ void registerTweenClass(sol::table _tbl, const char * _name)
 
 } // namespace detail
 
+#ifdef CRUNCHLUASOL_IMPLEMENTATION
 STICK_API void registerCrunch(sol::state_view _lua, const stick::String & _namespace)
 {
     registerCrunch(_lua, stickLuaSol::ensureNamespaceTable(_lua, _lua.globals(), _namespace));
@@ -723,6 +724,8 @@ STICK_API void registerCrunch(sol::state_view _lua, sol::table _tbl)
         sol::overload((Mat4(*)(const Mat32 &))to3DTransform, (Mat4(*)(const Mat3 &))to3DTransform));
     tbl.set_function("directedAngle", directedAngle<Float>);
 }
+#endif // CRUNCHLUASOL_IMPLEMENTATION
+
 } // namespace crunchLuaSol
 
 #endif // CRUNCHLUASOL_CRUNCHLUASOL_HPP
